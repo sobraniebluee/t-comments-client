@@ -1,9 +1,13 @@
+@import 'macro-css';
+@import "variables";
+
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: #f2f2f2 !important;
+  font-family: Roboto, 'Helvetica Neue', Helvetica, sans-serif;
 }
 
 a {
@@ -12,15 +16,58 @@ a {
 }
 
 * {
+  -webkit-text-size-adjust: 100%;
   box-sizing: border-box;
+  outline: none;
+  font-family: Roboto, 'Helvetica Neue', Helvetica, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+.content {
+  max-width: $window-width;
+  width: 100%;
+  margin: 0 auto;
+
+  &--full {
+    max-width: $window-full-width;
   }
-  body {
-    color: white;
-    background: black;
+}
+
+.wrapper {
+  display: flex;
+  padding: 0 30px;
+}
+
+.main-layout-white {
+  background-color: #fff;
+  height: 100vh;
+}
+
+.container {
+  margin: 0 auto;
+  width: 680px;
+}
+.leftSide {
+  height: 50vh;
+  transition: .2s;
+  position: sticky;
+  top: 60px;
+  left: 0;
+   &.hidden {
+    transform: translateX(-120%);
   }
+}
+
+.defaultButton {
+  background: #0d7bcd;
+  font-weight: 400;
+  color: #f2f2f2;
+  font-size: 16px;
+  &:hover {
+    background: #0d7bcd;
+  }
+}
+
+.recommends{
+  width: 640px;
+  margin: 0 auto;
 }

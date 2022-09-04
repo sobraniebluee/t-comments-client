@@ -1,0 +1,207 @@
+$color-branch: #e6e6e6;
+$content-offset-top:24px;
+$size-avatar:30px;
+$offset-avatar-top:2px;
+
+.postComments {
+  padding: 20px;
+  &Header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 0 20px 0;
+    &__actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      svg {
+        cursor: pointer;
+      }
+    }
+  }
+}
+.commentWrapper {
+  display: flex;
+  margin: 0 auto 0 0;
+}
+.commentBranches {
+  max-height: 100%;
+  display: flex;
+
+  &__content {
+    width: 21px;
+    height: 100%;
+    border-left: 1px solid $color-branch;
+    cursor: pointer;
+    transition: 0s;
+    &.active_branch {
+      border-left: 2px solid #4683d9;
+      &:before {
+        border: solid #4683d9;
+        content: '';
+        -webkit-box-sizing: content-box;
+        box-sizing: content-box;
+        display: block;
+        width: 21px;
+        height: $content-offset-top;
+        padding-bottom: $size-avatar *.5 + $offset-avatar-top;
+        border-width: 0 0 2px 2px;
+        border-bottom-left-radius: 8px;
+        margin-left: -2px;
+      }
+    }
+    //&:hover {
+    //  border-left: 2px solid #4683d9;
+    //}
+    //&:hover:before {
+    //    border: solid #4683d9;
+    //    content: '';
+    //    -webkit-box-sizing: content-box;
+    //    box-sizing: content-box;
+    //    display: block;
+    //    width: 21px;
+    //    height: $content-offset-top;
+    //    padding-bottom: $size-avatar *.5 + $offset-avatar-top;
+    //    border-width: 0 0 2px 2px;
+    //    border-bottom-left-radius: 8px;
+    //    margin-left: -2px;
+    //  }
+    &.hide:before {
+      display: none;
+    }
+    &:before{
+      content: '';
+      -webkit-box-sizing: content-box;
+      box-sizing: content-box;
+      display: block;
+      width: 21px;
+      height: $content-offset-top;
+      padding-bottom: $size-avatar *.5 + $offset-avatar-top;
+      border: solid $color-branch;
+      border-width: 0 0 1px 1px;
+      border-bottom-left-radius: 8px;
+      margin-left: -1px;
+    }
+  }
+}
+.comment {
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  padding: 18px 0 0 0;
+  .commentHeader {
+    display: flex;
+    justify-content: space-between;
+
+    .user {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      flex: 1;
+
+      .userTitle {
+        margin-left: 12px;
+        cursor: pointer;
+
+        p {
+          font-weight: 500;
+          line-height: 1;
+        }
+
+        time {
+          font-size: 0.75rem;
+          color: #595959;
+        }
+      }
+    }
+
+    .vote {
+      display: flex;
+      flex: 4;
+      justify-content: flex-end;
+    }
+  }
+
+  .commentBody {
+    padding: 8px 0 8px 0;
+  }
+  .commentAnswerFormWrapper {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin: 20px 0 0 auto;
+  }
+}
+.commentToggleTitle {
+    color: #0d7bcd;
+    cursor: pointer;
+}
+.commentFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  span {
+    width: auto;
+    font-size: 0.875rem;
+    color: #595959;
+    cursor: pointer;
+  }
+  svg {
+    cursor: pointer;
+    margin-left: 8px;
+  }
+}
+.commentForm {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  background: #f7f7f7;
+  border:1px solid rgba(0,0,0,.03);
+  border-radius: 10px;
+  transition: .2s;
+  &.focus {
+      border:1px solid #4086e0;
+  }
+
+  .commentFormEditor {
+    min-height: 24px;
+    padding: 6px 0;
+    position: relative;
+    .placeholder {
+      position: absolute;
+      top:2px;
+      color: rgba(89, 89, 89, 0.94);
+      z-index: 1;
+    }
+    &__editable {
+      position: relative;
+      z-index: 2;
+    }
+  }
+  &__actions {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    &__buttons {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex: 2;
+      p {
+        color: #595959;
+        margin-right: 20px;
+        cursor: pointer;
+      }
+    }
+  }
+  button {
+    &:disabled {
+      opacity: .7;
+      background: #0d7bcd;
+      color: #fff;
+    }
+    padding:8px 34px;
+  }
+}

@@ -1,0 +1,30 @@
+.accountBody {
+  margin-top: 30px;
+  width: 70%;
+}
+
+.accountPosts {
+  width: 100%;
+}
+
+.newPost {
+  width: 100%;
+  padding: 10px 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  p {
+    margin-left: 10px;
+    color: #595959;
+  }
+}
+
+.notPosts {
+  margin: 20px 0 0 0;
+  padding: 20px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #595959;
+}

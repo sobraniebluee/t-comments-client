@@ -1,0 +1,60 @@
+.postActions {
+  margin: 10px 0 0 0;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.postActionsVote {
+  display: flex;
+  align-items: center;
+  .voteCount {
+    margin: 0 7px;
+    [data-positive="true"] {
+      color: #2ea83a;
+    }
+    [data-positive="false"] {
+      color: #e52e3a;
+    }
+    span {
+      font-size: 15px;
+    }
+  }
+}
+
+.postActionsList{
+  list-style: none;
+  display: flex;
+  justify-content: flex-start;
+  padding: 0;
+  margin: 0;
+  li {
+    &:first-of-type {
+      margin: 0;
+      & button {
+       padding: 8px 8px 8px 0;
+      }
+    }
+    margin:0 7px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.3s;
+    [data-unsaved-markbook="true"]:active {
+      transition: 0.3s;
+      scale: 1.3;
+    }
+    [data-saved-markbook="true"] {
+      color: #0d7bcd;
+    }
+    &:hover p,&:hover button{
+      color: #0d7bcd;
+      background: transparent !important;
+    }
+  }
+  &__active_up_vote {
+    color: #2ea83a;
+  }
+  &__active_down_vote {
+    color: #e52e3a;
+  }
+}

@@ -1,0 +1,62 @@
+$editor-full-width: 650px;
+$editor-small-width: 550px;
+
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.modalContent {
+  width: 80%;
+  padding: 20px;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+}
+
+.modalMain {
+  width: $editor-full-width;
+  margin: 0 auto;
+  @media (max-width: 768px) {
+    margin: 0 0;
+    max-width: 650px;
+    width: 100%!important;
+  }
+}
+
+.modalHeader {
+  width: 100%;
+  .modalTitle {
+  border: none;
+  &__input {
+    width: 100%;
+    font-size: 1.6rem;
+    font-weight: 900;
+    input {
+      width: 100%;
+      margin: 0 auto;
+    }
+  }
+}
+}
+
+
+.modalEditor{
+  height: 100%;
+  overflow-y: scroll;
+}
+.modalFooter {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  button {
+    background: #0d7bcd;
+    color: #fff;
+    padding: 8px 40px;
+    &:hover {
+      background: rgba(13, 123, 205, 0.8);
+    }
+  }
+}

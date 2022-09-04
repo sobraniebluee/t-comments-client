@@ -1,0 +1,90 @@
+@import "../../styles/variables";
+
+.paper {
+  border-radius: 8px !important;
+  margin-bottom: 30px;
+  &Full {
+    border-radius: 0 0 8px 8px !important;
+  }
+  &__content {
+    width: $window-width;
+    margin: 0 auto;
+    &__user {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      &Info {
+        display: flex;
+        align-items: center;
+
+        & span {
+          font-weight: 500;
+          margin-left: 10px;
+        }
+
+        & img {
+          border-radius: 50%;
+        }
+      }
+    }
+     &__userButtons {
+        & button {
+          padding-left: 20px;
+          padding-right: 20px;
+          background: #0d7bcd;
+          font-weight: 400;
+          color: #f2f2f2;
+          font-size: 16px;
+          &:hover {
+            background: #0d7bcd;
+          }
+          svg {
+            width: 22px;
+            height: 22px;
+            margin-right: 10px;
+          }
+        }
+      }
+  }
+  &__watches {
+    margin:8px 0;
+    font-size: 15px;
+  }
+}
+
+.header {
+  &__title {
+    font-weight: 500 !important;
+    font-size: 1.7rem !important;
+  }
+  &__more_features {
+    position: relative;
+    flex: 3;
+    display: flex;
+    justify-content: flex-end;
+  }
+  margin-bottom: 10px;
+}
+
+.contentUser {
+    display: flex;
+    align-items: center;
+  &__title {
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      &:hover{
+        color: #0d7bcd;
+      }
+  }
+  &__avatar{
+  width: 22px;
+  height: 22px;
+  border-radius:4px!important;
+  border: 1px solid rgba(0, 0, 0, 0.27) !important;
+  margin-right: 10px;
+  }
+}
+
+

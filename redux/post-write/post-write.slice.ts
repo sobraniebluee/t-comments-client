@@ -1,7 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IPost} from "../../utils/types";
-import {createPost, fetchOnePost, updatePost} from "../action-creators/post";
-import {HYDRATE} from "next-redux-wrapper";
+import {createPost, fetchOnePost, updatePost} from "./post-write.actions";
 
 interface PostWriteState {
     isNew:boolean,
@@ -35,13 +34,6 @@ const postSliceWrite = createSlice({
         }
     },
     extraReducers: {
-        //  [HYDRATE]: (state, action) => {
-        //      console.log("HYDRATE POST WRITE",)
-        //      return {
-        //          ...state
-        //      }
-        //
-        // },
         [fetchOnePost.pending.type]: (state) => {
             state.isCommit = false
             state.isLoading = true

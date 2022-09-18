@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import {useAppDispatch, useTypedSelector} from "../redux/hooks";
-import {closeAuthDialog, openAuthDialog} from "../redux/slice/ui";
+import {closeAuthDialog, openAuthDialog} from "../redux/ui/ui.slice";
 
 interface AuthDialogContextProviderProps {
     children: React.ReactNode | React.ReactNode[]

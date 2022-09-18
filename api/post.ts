@@ -1,5 +1,5 @@
 import {AxiosInstance} from "axios";
-import {IPost, PaginationResponse, PostCreateRequest, ResponseTogglePost} from "../utils/types";
+import {IPost, IPostFull, PaginationResponse, PostCreateRequest, ResponseTogglePost} from "../utils/types";
 import {LIMIT_PEG_PAGE} from "../utils/consts";
 
 export const postApi = (instance: AxiosInstance) => ({
@@ -7,7 +7,7 @@ export const postApi = (instance: AxiosInstance) => ({
         return await instance.get<PaginationResponse<IPost[]>>(`posts?page=${_page}&limit=${_limit}`)
     },
     getOne: async (id: string | number) => {
-        return await instance.get<IPost>('posts/' + id)
+        return await instance.get<IPostFull>('posts/' + id)
     },
     create: async ({title, description} : PostCreateRequest) => {
         return await instance.post('posts', {title, description})

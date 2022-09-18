@@ -5,8 +5,8 @@ import {IPost} from '../utils/types';
 import PostPreview from "../components/PostPreview";
 import {Api} from "../api/api";
 import {useScrollPagination} from "../hooks/usePagination";
-import {PaginationLoader} from "../components/Loaders";
-import {fetchAllPosts} from "../api/fetch";
+import {PaginationLoader} from "../components/Loaders/PaginationLoader";
+import {fetchAllPosts} from "../api/fetchHooks";
 import {Divider, Typography} from "@mui/material";
 import NewPost from "../components/AccountPage/AccountBody/NewPost";
 
@@ -14,7 +14,6 @@ interface INew {
     items: IPost[]
     pagination: any
 }
-
 
 
 const Index: NextPage<INew> = ({items, pagination}) => {
@@ -28,7 +27,6 @@ const Index: NextPage<INew> = ({items, pagination}) => {
         <>
             <MainLayout className="pt-20">
                 <div className={"d-flex align-center mb-20"}>
-                    {/*<UserAvatar username={"Ddd"} background={getRandomColor()} styles={{fontSize:"1.5rem", marginRight: "20px", borderRadius:"8px"}} height={60} width={60}></UserAvatar>*/}
                     <Typography variant={"h4"} className={"mr-20"}>Hello,</Typography>
                     <NewPost/>
                 </div>
@@ -49,7 +47,7 @@ const Index: NextPage<INew> = ({items, pagination}) => {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     try {
-        let {data} = await Api().post.getAll()
+        let {data} = await Api(ctx).post.getAll()
         return {
             props: {
                 ...data

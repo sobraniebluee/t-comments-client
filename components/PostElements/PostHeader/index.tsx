@@ -6,12 +6,12 @@ import {timeHasPassed} from "../../../utils/timeHasPassed";
 import {useAppDispatch, useTypedSelector} from "../../../redux/hooks";
 import MenuHeader from "./MenuHeader";
 import {useRouter} from "next/router";
-import {deletePost} from "../../../redux/action-creators/post";
-import {resetDeleteState} from "../../../redux/slice/post-delete";
+import {deletePost} from "../../../redux/post-delete/post-delete.actions";
+import {resetDeleteState} from "../../../redux/post-delete/post-delete.slice";
 import {useWriteFormContext} from "../../../context/WriteFormContext";
 import {UserAvatar} from "../../Header/AccountMenu";
 import {getRandomColor} from "../../../utils/utils";
-import {NoSsr} from "@mui/base";
+import CreatedAt from "./CreatedAt";
 
 interface IPostHeader {
     id:number,
@@ -31,7 +31,7 @@ const PostHeader: React.FC<IPostHeader> = ({id, title, author, created_at, isFul
     const data = useTypedSelector((state) => state.user.data)
     const {isDelete, isLoading} = useTypedSelector((state) => state.post.delete)
 
-    let [createdAt, setCreatedAt] = React.useState<string>('')
+
 
     const handleDeletePost = () => {
         if (window.confirm("You sure?")) {
@@ -47,9 +47,7 @@ const PostHeader: React.FC<IPostHeader> = ({id, title, author, created_at, isFul
         }
     }, [isDelete])
 
-     React.useEffect(() => {
-        setCreatedAt(timeHasPassed(created_at))
-    }, [created_at])
+
 
 
     return (
@@ -58,7 +56,7 @@ const PostHeader: React.FC<IPostHeader> = ({id, title, author, created_at, isFul
                 <Link href={`../u/${author.username}`}>
                     <a className={styles.contentUser}>
                             <UserAvatar
-                                username={author.username}
+                                userAvatar={author.username}
                                 width={20}
                                 height={20}
                                 classNames={styles.contentUser__avatar}
@@ -68,7 +66,7 @@ const PostHeader: React.FC<IPostHeader> = ({id, title, author, created_at, isFul
                         <span className={styles.contentUser__title}>{author.username}</span>
                     </a>
                 </Link>
-                <Typography color={"secondary"} className="ml-20">{createdAt}</Typography>
+                <CreatedAt created_at={created_at} />
                 <MenuHeader id={id}
                             isMyPost={data?.id == author.id}
                             onDeletePost={handleDeletePost}

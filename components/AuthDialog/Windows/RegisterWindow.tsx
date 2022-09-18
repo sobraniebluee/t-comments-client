@@ -7,7 +7,7 @@ import {useAppDispatch, useTypedSelector} from "../../../redux/hooks";
 import {RequestCreateUser} from "../../../utils/types";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {validateRegisterSchema} from "../../../utils/validators";
-import {userRegisterThunk} from "../../../redux/action-creators/user";
+import {userRegisterThunk} from "../../../redux/user/user.actions";
 import styles from "../AuthDialog.module.scss";
 import {useForm} from "react-hook-form";
 

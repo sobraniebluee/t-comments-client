@@ -7,7 +7,7 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import styles from '../AuthDialog.module.scss'
 import InputField from "../FormElements/InputField";
 import {useAppDispatch, useTypedSelector} from "../../../redux/hooks";
-import {userLoginThunk} from "../../../redux/action-creators/user";
+import {userLoginThunk} from "../../../redux/user/user.actions";
 import {RequestAuthUser} from "../../../utils/types";
 
 interface LoginWindowProps {

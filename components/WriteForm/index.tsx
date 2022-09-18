@@ -3,18 +3,18 @@ import {Modal, Paper} from "@mui/material";
 import {OutputData} from "@editorjs/editorjs";
 import dynamic from 'next/dynamic';
 import styles from './WriterForm.module.scss'
-import {createPost, fetchOnePost, updatePost} from "../../redux/action-creators/post";
+import {createPost, fetchOnePost, updatePost} from "../../redux/post-write/post-write.actions";
 import {useAppDispatch, useTypedSelector} from '../../redux/hooks';
 import {ModalFooter, ModalHeader, WriteFormLayout} from "./FormParts";
 import {useRouter} from "next/router";
-import { resetWriteState } from '../../redux/slice/post-write';
+import { resetWriteState } from '../../redux/post-write/post-write.slice';
 
 interface EditorFormProps {
     idPost: number | null
     isOpenWriterForm: boolean,
     handlerCloseWriteForm: () => void
 }
-//@ts-ignore
+
 const Editor = dynamic(() => import('./Editor').then((elems) => elems.Editor), {ssr:false})
 
 

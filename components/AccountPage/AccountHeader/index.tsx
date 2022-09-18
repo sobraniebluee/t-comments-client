@@ -18,7 +18,7 @@ const AccountHeader: React.FC<AccountHeaderProps> = React.memo(({username, isMyA
         <Paper elevation={0} className={styles.accountHeader}>
             <div className={styles.top}>
                 <NoSsr>
-                    <UserAvatar username={username}
+                    <UserAvatar userAvatar={username}
                                 width={120}
                                 height={120}
                                 background={getRandomColor()}

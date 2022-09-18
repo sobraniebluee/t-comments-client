@@ -1,6 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {HYDRATE} from "next-redux-wrapper";
-import {deletePost} from "../action-creators/post";
+import {deletePost} from "./post-delete.actions";
 
 interface InitialState {
     isLoading:boolean,
@@ -25,11 +24,6 @@ const postDeleteSlice = createSlice({
         }
     },
     extraReducers: {
-        // [HYDRATE]: (state) => {
-        //     return {
-        //         ...state
-        //     }
-        // },
         [deletePost.pending.type]: (state) => {
             state.isLoading = true
         },

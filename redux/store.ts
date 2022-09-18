@@ -1,18 +1,24 @@
 import {configureStore, ThunkAction, Action, combineReducers} from "@reduxjs/toolkit";
 import {createWrapper} from "next-redux-wrapper";
-import {userReducer} from './slice/user'
-import {postWrite} from "./slice/post-write";
-import {UIReducer} from "./slice/ui";
-import {postDeleteReducer} from "./slice/post-delete";
+import {userReducer} from './user/user.slice'
+import {postWrite} from "./post-write/post-write.slice";
+import {UIReducer} from "./ui/ui.slice";
+import {postDeleteReducer} from "./post-delete/post-delete.slice";
+import {postRecommendsReducer} from "./post-recommends/post-recommends.slice";
+import {postCommentsReducer} from "./post-comments/post-comments.slice";
+
 
 const makeStore = () => {
     return configureStore({
-        // preloadedState: {},
         reducer: {
             user:userReducer,
             post:combineReducers({
                 write:postWrite,
                 delete:postDeleteReducer
+            }),
+            post_data: combineReducers({
+                post_comments: postCommentsReducer,
+                post_recommends: postRecommendsReducer
             }),
             ui:UIReducer,
         }

@@ -2,9 +2,10 @@ import Cookies, {destroyCookie, parseCookies} from 'nookies'
 import axios from "axios";
 import {GetServerSidePropsContext, NextPageContext} from "next";
 import {userApi} from "./user";
-import {saveTokens} from "../redux/action-creators/user";
+import {saveTokens} from "../redux/user/user.actions";
 import {postApi} from "./post";
 import {memberApi} from "./member";
+import {commentsApi} from "./comments";
 
 const BASE_URl = 'http://127.0.0.1:5001/api/v1/'
 
@@ -13,6 +14,7 @@ export type ApiReturnType = {
     user: ReturnType<typeof userApi>,
     post: ReturnType<typeof postApi>,
     member: ReturnType<typeof memberApi>
+    comments: ReturnType<typeof commentsApi>
 }
 
 export const Api = (ctx?: GetServerSidePropsContext | NextPageContext): ApiReturnType => {
@@ -21,7 +23,8 @@ export const Api = (ctx?: GetServerSidePropsContext | NextPageContext): ApiRetur
     const Apis = {
         user: userApi,
         post: postApi,
-        member: memberApi
+        member: memberApi,
+        comments: commentsApi
     }
     const instance = axios.create({
         baseURL:BASE_URl,

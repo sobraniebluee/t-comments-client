@@ -1,8 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {HYDRATE} from "next-redux-wrapper";
-import {ResponseAuth, ResponseUser} from "../../utils/types";
-import {userAuthThunk, userLoginThunk, userLogoutThunk, userRegisterThunk} from "../action-creators/user";
-import {setError} from "./post-write";
+import {ResponseUser} from "../../utils/types";
+import {userAuthThunk, userLoginThunk, userLogoutThunk, userRegisterThunk} from "./user.actions";
 
 
 interface IUserState {

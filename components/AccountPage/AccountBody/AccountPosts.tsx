@@ -6,8 +6,8 @@ import {IPagination, IPost} from "../../../utils/types";
 import PostPreview from "../../PostPreview";
 import useScrollPagination from "../../../hooks/usePagination";
 import {useWriteFormContext} from "../../../context/WriteFormContext";
-import {PaginationLoader} from "../../Loaders";
-import { fetchUserPosts } from '../../../api/fetch';
+import {PaginationLoader} from "../../Loaders/PaginationLoader";
+import { fetchUserPosts } from '../../../api/fetchHooks';
 import NewPost from "./NewPost";
 
 interface AccountBodyProps {

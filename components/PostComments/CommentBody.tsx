@@ -1,6 +1,5 @@
 import React from 'react';
-import {Paper, Typography} from "@mui/material";
-import clsx from "clsx";
+import {Typography} from "@mui/material";
 import styles from "./PostComments.module.scss";
 import {NoSsr} from "@mui/base";
 import {UserAvatar} from "../Header/AccountMenu";
@@ -10,23 +9,26 @@ import Vote, {VoteTypeEnum} from "../Vote";
 import {OutputBlockData, OutputData} from "@editorjs/editorjs";
 import BranchCommentForm from "./BranchCommentForm";
 import {IAuthor} from "../../utils/types";
+import WrapperCommentBody from './WrapperCommentBody';
 
 interface CommentBodyProps {
     id: number
+    idPost?: number
     author: IAuthor
     text: OutputData['blocks'],
     created_at: string
     isLastComment?: boolean
     updated_at?: string
+    countAnswers: number
 }
 
-const CommentBody: React.FC<CommentBodyProps> = ({id,author,text, updated_at,created_at, isLastComment}) => {
+const CommentBody: React.FC<CommentBodyProps> = React.memo((({id, author,text, updated_at,created_at, isLastComment, countAnswers}) => {
     return (
-        <Paper elevation={0} className={clsx(styles.comment)} >
+        <WrapperCommentBody id={id} countAnswers={countAnswers}>
             <div className={styles.commentHeader}>
                 <div className={styles.user}>
                     <NoSsr>
-                        <UserAvatar username={"ddd"}
+                        <UserAvatar userAvatar={author.username}
                                     width={30}
                                     height={30}
                                     background={getRandomColor()}
@@ -38,7 +40,8 @@ const CommentBody: React.FC<CommentBodyProps> = ({id,author,text, updated_at,cre
                     </div>
                 </div>
                 <div className={styles.vote}>
-                    <Vote id={0} rating={2} isMyVote={VoteTypeEnum.NULL} sendVote={(id, type) => {}}/>
+                    <Vote id={0} rating={2} isMyVote={VoteTypeEnum.NULL} sendVote={(id, type) => {
+                    }}/>
                 </div>
             </div>
             <div className={styles.commentBody}>
@@ -53,9 +56,13 @@ const CommentBody: React.FC<CommentBodyProps> = ({id,author,text, updated_at,cre
                 }
                 <Typography>ID: {id}</Typography>
             </div>
-            <BranchCommentForm idComment={id} isLast={isLastComment}/>
-        </Paper>
+            <BranchCommentForm idComment={id}
+                               isLast={isLastComment}
+            />
+        </WrapperCommentBody>
     );
-};
+}))
+
+CommentBody.displayName = 'CommentBodyComp'
 
 export default CommentBody;

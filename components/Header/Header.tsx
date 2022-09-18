@@ -3,13 +3,13 @@ import {useAppDispatch, useTypedSelector} from "../../redux/hooks";
 import {useLeftMenuContext} from "../../context/LeftMenuContext";
 import {Button, IconButton, Paper} from "@mui/material";
 import styles from './Header.module.scss'
-import {AccountCircleOutlined as UserIcon, Menu} from '@mui/icons-material';
+import {AccountCircleOutlined as UserIcon, Menu, NotificationsOutlined as NotificationIcon} from '@mui/icons-material';
 import Link from 'next/link';
 import {Logo} from "../Icons";
 import WriteForm from "../WriteForm";
 import clsx from "clsx";
 import AuthDialog from "../AuthDialog";
-import {userLogoutThunk} from "../../redux/action-creators/user";
+import {userLogoutThunk} from "../../redux/user/user.actions";
 import {useAuthDialogContext} from "../../context/AuthDialogContext";
 import AuthRequired from "../AuthRequired";
 import {useWriteFormContext} from "../../context/WriteFormContext";
@@ -71,6 +71,11 @@ const Header: React.FC<IHeader> = () => {
                        New Post
                    </Button>
                 </AuthRequired>
+                <AuthRequired onClick={() => {}}>
+                    <IconButton>
+                        <NotificationIcon color={"primary"}/>
+                    </IconButton>
+                </AuthRequired>
                 { isAuth && data ?
                     <AccountMenu
                         username={data?.username}
@@ -85,16 +90,16 @@ const Header: React.FC<IHeader> = () => {
                     </Button>
                 }
            </div>
-           { isOpenWriterForm &&
-               <WriteForm idPost={idPost}
-                          isOpenWriterForm={isOpenWriterForm}
-                          handlerCloseWriteForm={handlerCloseWriteForm}/>
-           }
-           { (isAuthDialogOpen && !isAuth) &&
-               <AuthDialog isOpenAuthDialog={isAuthDialogOpen}
-                           onCloseHandler={handlerCloseAuthDialog}
-                />
-           }
+               { isOpenWriterForm &&
+                   <WriteForm idPost={idPost}
+                              isOpenWriterForm={isOpenWriterForm}
+                              handlerCloseWriteForm={handlerCloseWriteForm}/>
+               }
+               { (isAuthDialogOpen && !isAuth) &&
+                   <AuthDialog isOpenAuthDialog={isAuthDialogOpen}
+                               onCloseHandler={handlerCloseAuthDialog}
+                    />
+               }
            <NoSsr>
             <HeaderLoader/>
            </NoSsr>

@@ -1,26 +1,42 @@
 import React from 'react';
-import {IconButton, Paper, Typography} from "@mui/material";
+import {Paper, Typography} from "@mui/material";
 import styles from "./PostComments.module.scss";
-import Comment, {CommentsLevels} from "./Comment";
+import Comment from "./Comment";
 import {TuneOutlined} from "@mui/icons-material";
-import Index from "./BranchCommentForm/CommentForm";
+import CommentForm from "./BranchCommentForm/CommentForm";
 import {NoSsr} from "@mui/base";
-import {dataComments} from "../../utils/consts";
 import {IComment} from "../../utils/types";
 import {countCommentsDepth} from "../../utils/utils";
 import CommentFormContextProvider from "../../context/CommentFormContext";
-import usePagination from "../../hooks/usePagination";
 import BranchContextProvider from "../../context/BranchContext";
-
+import CommentContextProvider from "../../context/CommentContext";
+import {useAppDispatch, useTypedSelector} from "../../redux/hooks";
+import {fetchCommentsForPost} from "../../redux/post-comments/post-comments.actions";
+import {PaginationLoader} from "../Loaders/PaginationLoader";
 
 
 interface PostCommentsProps {
-
+    idPost: number
+    dataComments?: IComment[]
 }
 
+const PostComments:React.FC<PostCommentsProps> = ({idPost}) => {
+    const [countComments, setCountComments] = React.useState<number>(0)
+    const dispatch = useAppDispatch()
+    const dataComments = useTypedSelector((state) => state.post_data.post_comments.comments)
+    const isLoading = useTypedSelector((state) => state.post_data.post_comments.isLoading)
+    const message = useTypedSelector((state) => state.post_data.post_comments.message)
 
-const PostComments:React.FC<PostCommentsProps> = () => {
-    const countComments = countCommentsDepth(dataComments)
+    React.useEffect(() => {
+        dispatch(fetchCommentsForPost(idPost))
+    }, [idPost])
+
+    React.useEffect(() => {
+        if (!isLoading && !message) {
+            setCountComments(countCommentsDepth(dataComments))
+        }
+    }, [dataComments])
+
     return (
         <Paper elevation={0} className={styles.postComments}>
             <Paper elevation={0} className="content">
@@ -30,27 +46,41 @@ const PostComments:React.FC<PostCommentsProps> = () => {
                         <TuneOutlined color={"primary"} fontSize={"small"}/>
                     </div>
                 </div>
-                <Index/>
-                <CommentFormContextProvider>
-                    <BranchContextProvider>
-                        <NoSsr>
-                           {
-                            dataComments.length > 0 &&
-                               dataComments.map((item, index) => (
-                                       <Comment key={(Math.random() * 100).toString()}
-                                                id={item.id}
-                                                author={item.author}
-                                                created_at={item.created_at}
-                                                text={item.text}
-                                                level={0}
-                                                rootAnswers={item.answers}
-                                                dataBranchesLevels={[]}
-                                       />
-                               ))
-                            }
-                        </NoSsr>
-                    </BranchContextProvider>
-                </CommentFormContextProvider>
+                { !isLoading
+                    ?
+                    <>
+                    <CommentFormContextProvider>
+                        <BranchContextProvider>
+                                <CommentForm isClosable={false}
+                                             idRoot={null}
+                                             isReply={false}
+                                             idPost={idPost}
+                                />
+                                <NoSsr>
+                                    {
+                                        dataComments.length > 0 &&
+                                            dataComments.map((item, index) => (
+                                                <CommentContextProvider key={index}>
+                                                    <Comment key={(Math.random() * 100).toString()}
+                                                             id={item.id}
+                                                             author={item.author}
+                                                             created_at={item.created_at}
+                                                             text={item.text}
+                                                             level={0}
+                                                             rootAnswers={item.answers}
+                                                             dataBranchesLevels={[]}
+                                                             isLast={item.answers.length == 0}
+                                                    />
+                                                </CommentContextProvider>
+                                            ))
+                                        }
+                                </NoSsr>
+                            </BranchContextProvider>
+                        </CommentFormContextProvider>
+                    </>
+                    :
+                    <PaginationLoader/>
+                }
             </Paper>
         </Paper>
     );
@@ -60,25 +90,3 @@ export default PostComments;
 
 
 
-// const RenderChildComments = (rootAnswers: IComment[], level, content: JSX.Element[] = [], levels: CommentsLevels[] = []) => {
-//         {rootAnswers.length > 0 && rootAnswers.map(({id,author,text,created_at, answers}: IComment, index) => {
-//                 // console.log("Length:", author.username, {level: level,length: countCommentsDepth(answers), isLast: children.length - 1 == index})
-//             // console.log("rootAnswers",author.username, rootAnswers)
-//             let nextAnswers = rootAnswers[index + 1] ? answers : []
-//             levels.push({level: level, length: countCommentsDepth(nextAnswers), isLast: rootAnswers.length - 1 == index})
-//             // console.log("Levels for Render",author.username, levels)
-//
-//             content.push(<Comment key={(Math.random() * 1000).toString()}
-//                             id={id}
-//                             author={author}
-//                             created_at={created_at}
-//                             text={text}
-//                             level={level}
-//                             levels={levels}
-//             />);
-//
-//             answers.length > 0 && RenderChildComments(answers,level + 1,content,levels)
-//         })}
-//         // console.log(levels)
-//         return content
-//     }

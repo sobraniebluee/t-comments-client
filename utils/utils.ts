@@ -1,4 +1,3 @@
-import {dataComments} from "./consts";
 import {IComment} from "./types";
 
 export const getRandomColor = () => {
@@ -17,5 +16,19 @@ export const countCommentsDepth = (root: IComment[]) => {
     }
     wrap(root)
     return count
+}
+// Check is have own root id
+
+export const hasOwnIds = (root: IComment[]) => {
+    let ids = []
+    const wrap = (root: IComment[]) => {
+        for (let i = 0; i < root.length; i++) {
+            let temp = root[i].answers
+            ids.push(root[i].id)
+            wrap(temp)
+        }
+    }
+    wrap(root)
+    return ids
 }
 

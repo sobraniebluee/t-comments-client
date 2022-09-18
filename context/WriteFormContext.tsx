@@ -1,8 +1,7 @@
 import React, {useContext} from 'react';
-import {useRouter} from "next/router";
 import {useAppDispatch, useTypedSelector} from "../redux/hooks";
-import {closeWriteForm, openWriteForm} from "../redux/slice/ui";
-import {resetWriteState} from "../redux/slice/post-write";
+import {closeWriteForm, openWriteForm} from "../redux/ui/ui.slice";
+import {resetWriteState} from "../redux/post-write/post-write.slice";
 
 interface IWriteFormContext {
     idPost: number | null,
@@ -41,7 +40,6 @@ const WriteFormContextProvider: React.FC<WriteFormContextProviderProps> = ({chil
         </WriteFormContext.Provider>
     );
 };
-
 
 
 export const useWriteFormContext = () => {

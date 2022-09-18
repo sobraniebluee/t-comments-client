@@ -1,7 +1,7 @@
 import '../styles/globals.scss'
 import type {AppProps} from 'next/app'
 import {wrapper} from "../redux/store";
-import {setUserData} from "../redux/slice/user";
+import {setUserData} from "../redux/user/user.slice";
 import {Api} from "../api/api";
 import Head from "next/head";
 import {ThemeProvider} from "@mui/material";

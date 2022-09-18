@@ -9,18 +9,19 @@ interface AccountMenuProps {
     username: string
 }
 interface UserAvatarProps {
-    username: string
+    userAvatar: string | JSX.Element
     height?: number,
     width?: number,
     background?: string
     styles?: object,
     classNames?: string
 }
-export const UserAvatar: React.FC<UserAvatarProps> = ({username, styles, classNames, width = 32, height= 32, background}) =>{
-    const firstLetterName = username[0].toUpperCase()
+
+export const UserAvatar: React.FC<UserAvatarProps> = ({userAvatar, styles, classNames, width = 32, height= 32, background}) =>{
+    const userFirstLetterOrIcon = (typeof userAvatar == 'string') ? userAvatar[0].toUpperCase() : userAvatar
     return (
         <Avatar className={classNames} sx={{ width: width, height: height, background: background ? background : "", ...styles}}>
-            {firstLetterName}
+            {userFirstLetterOrIcon}
         </Avatar>
     )
 }
@@ -49,7 +50,7 @@ const AccountMenu: React.FC<AccountMenuProps> = ({logoutHandler, username}) => {
                   >
                       <UserAvatar height={32}
                                   width={32}
-                                  username={username}
+                                  userAvatar={username}
                                   background={"hsl(238deg 86% 69%)"}
                       />
                   </IconButton>
@@ -93,7 +94,7 @@ const AccountMenu: React.FC<AccountMenuProps> = ({logoutHandler, username}) => {
           >
               <Link href={`../u/${username}`}>
                 <MenuItem>
-                    <UserAvatar username={username}
+                    <UserAvatar userAvatar={username}
                                 width={32}
                                 height={32}
                                 background={"hsl(238deg 86% 69%)"}

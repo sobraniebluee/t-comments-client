@@ -38,28 +38,28 @@ const Branches: React.FC<BranchesProps> = ({currentCompLevel,dataBranchesLevels}
         //     }
         // </div>
         <>
-            {
-                Array(currentCompLevel).fill(0).map((_, index) => {
-                    if (index < 9) {
-                        let currentLevelBranch = index + 1
-                        let branchData = dataBranchesLevels.find(item => item.level == currentLevelBranch)
-                        let isDraw = false
-                        if (branchData) {
-                            if (branchData.lengthBranch > 0 && !branchData.isLast) {
-                                isDraw = true
-                                branchData.lengthBranch = branchData.lengthBranch - 1
-                            } else {
-                                dataBranchesLevels.splice(dataBranchesLevels.indexOf(branchData))
-                            }
-                        }
-                        return <Branch key={Math.random().toString(12)}
-                                       isDraw={isDraw}
-                                       currentIterLevel={index}
-                                       currentCompLevel={currentCompLevel}
-                                       rootBranch={branchData?.rootBranch || null}/>
-                    }
-                })
-            }
+            {/*{*/}
+            {/*    Array(currentCompLevel).fill(0).map((_, index) => {*/}
+            {/*        if (index < 9) {*/}
+            {/*            let currentLevelBranch = index + 1*/}
+            {/*            let branchData = dataBranchesLevels.find(item => item.level == currentLevelBranch)*/}
+            {/*            let isDraw = false*/}
+            {/*            if (branchData) {*/}
+            {/*                if (branchData.lengthBranch > 0 && !branchData.isLast) {*/}
+            {/*                    isDraw = true*/}
+            {/*                    branchData.lengthBranch = branchData.lengthBranch - 1*/}
+            {/*                } else {*/}
+            {/*                    dataBranchesLevels.splice(dataBranchesLevels.indexOf(branchData))*/}
+            {/*                }*/}
+            {/*            }*/}
+            {/*            return <Branch key={Math.random().toString(12)}*/}
+            {/*                           isDraw={isDraw}*/}
+            {/*                           currentIterLevel={index}*/}
+            {/*                           currentCompLevel={currentCompLevel}*/}
+            {/*                           rootBranch={branchData?.rootBranch || null}/>*/}
+            {/*        }*/}
+            {/*    })*/}
+            {/*}*/}
         </>
     )
 }

@@ -17,9 +17,7 @@ const initialState: IPostRecommendsState = {
 const postRecommendsSlice = createSlice({
     name: "post-recommends",
     initialState,
-    reducers: {
-
-    },
+    reducers: {},
     extraReducers: {
         [fetchPostRecommends.pending.type]: (state) => {
             state.isLoading = true

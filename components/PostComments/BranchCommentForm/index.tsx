@@ -4,20 +4,23 @@ import {useCommentFormContext} from "../../../context/CommentFormContext";
 import styles from "../PostComments.module.scss";
 import {MoreHorizRounded} from "@mui/icons-material";
 import clsx from "clsx";
-import {useCommentContext} from "../../../context/CommentContext";
+import {useHideBranchContext} from "../../../context/HideBranchCommentContext";
 import {useRouter} from "next/router";
+import {IComment} from "../../../utils/types";
 
 
 
 interface BranchCommentFormProps {
     idComment: number,
     isLast: boolean,
-    isHideBody?: boolean
+    isHideBody?: boolean,
+    setCommentAnswers: (comment: IComment) => void
+
 }
 
-const BranchCommentForm: React.FC<BranchCommentFormProps> = ({idComment,isLast,isHideBody}) => {
+const BranchCommentForm: React.FC<BranchCommentFormProps> = ({idComment,isLast,isHideBody, setCommentAnswers}) => {
     const {idComment: id, handlerClose, handlerOpen} = useCommentFormContext()
-    const {isHideElement} = useCommentContext()
+    const {isHideElement} = useHideBranchContext()
     const {query: {id: idPost}} = useRouter()
     return (
         <>
@@ -30,7 +33,7 @@ const BranchCommentForm: React.FC<BranchCommentFormProps> = ({idComment,isLast,i
                     idComment == id &&
                     <>
                         <div className={styles.commentBranch}>
-                            <div key={Math.random().toString(12)}
+                            <div
                                  className={clsx(styles.commentBranches__content,`--level:none`)}
                                  style={{height: `${isHideElement(idComment) ? 0 : (!!isLast) ? 0 : 100}%`}}
                             />
@@ -40,6 +43,7 @@ const BranchCommentForm: React.FC<BranchCommentFormProps> = ({idComment,isLast,i
                                      isReply={true}
                                      idRoot={id}
                                      idPost={parseInt(idPost as string)}
+                                     setCommentAnswers={setCommentAnswers}
                         />
                     </>
                 }

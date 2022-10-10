@@ -9,7 +9,6 @@ import {commentsApi} from "./comments";
 
 const BASE_URl = 'http://127.0.0.1:5001/api/v1/'
 
-
 export type ApiReturnType = {
     user: ReturnType<typeof userApi>,
     post: ReturnType<typeof postApi>,
@@ -38,7 +37,10 @@ export const Api = (ctx?: GetServerSidePropsContext | NextPageContext): ApiRetur
             config.headers.Authorization = 'Bearer ' + token.access_token
         }
         return config
-    }, (error) => Promise.reject(error))
+    }, (error) => {
+        console.log("Error", error)
+        return Promise.reject(error)
+    })
     instance.interceptors.response.use(
         (config) => config,
         async (err) => {
@@ -64,7 +66,7 @@ export const Api = (ctx?: GetServerSidePropsContext | NextPageContext): ApiRetur
                     return Promise.reject(err)
                 }
             }
-            return
+            return Promise.reject(err)
         })
 
     // console.log(ctx)

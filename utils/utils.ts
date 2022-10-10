@@ -32,3 +32,12 @@ export const hasOwnIds = (root: IComment[]) => {
     return ids
 }
 
+export const findRootComment = (id_root: number, comments: IComment[]): IComment => {
+    for (let i = 0;i < comments.length;i++) {
+        if (comments[i].id == id_root) {
+            return comments[i]
+        }
+        let temp = comments[i].answers
+        findRootComment(id_root, temp)
+    }
+}

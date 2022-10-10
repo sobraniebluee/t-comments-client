@@ -16,10 +16,10 @@ interface CommentContextProviderProps {
     children: React.ReactNode | React.ReactNode[]
 }
 
-const CommentContext = React.createContext<ICommentContext>(null)
+const HideBranchCommentContext = React.createContext<ICommentContext>(null)
 
 
-const CommentContextProvider: React.FC<CommentContextProviderProps> = ({children}) => {
+const HideBranchCommentContextProvider: React.FC<CommentContextProviderProps> = ({children}) => {
     const [idsHideBranch, setIdHideBranch] = React.useState<BranchIds[]>([])
 
     const handlerHideBranch = (branchIds: BranchIds) => {
@@ -32,18 +32,15 @@ const CommentContextProvider: React.FC<CommentContextProviderProps> = ({children
     const isHideElement = (id: number) => {
         return idsHideBranch.filter(item => item.idsChild.includes(id)).length > 0
     }
-    // React.useEffect(() => {
-    //     console.log(idsHideBranch)
-    // }, [idsHideBranch])
     return (
-        <CommentContext.Provider value={{idsHideBranch, handlerHideBranch, isHideElement}}>
+        <HideBranchCommentContext.Provider value={{idsHideBranch, handlerHideBranch, isHideElement}}>
             {children}
-        </CommentContext.Provider>
+        </HideBranchCommentContext.Provider>
     );
 };
 
-export const useCommentContext = () => {
-    return useContext(CommentContext)!
+export const useHideBranchContext = () => {
+    return useContext(HideBranchCommentContext)!
 }
 
-export default CommentContextProvider;
+export default HideBranchCommentContextProvider;

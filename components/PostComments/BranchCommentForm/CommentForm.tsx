@@ -7,10 +7,12 @@ import dynamic from "next/dynamic";
 import {OutputData} from "@editorjs/editorjs";
 import {useAppDispatch, useTypedSelector} from "../../../redux/hooks";
 import AuthRequired from "../../AuthRequired";
-import {createCommentForPost} from "../../../redux/post-comments/post-comments.actions";
 import MiniLoader from "../../Loaders/MiniLoader";
 import {useCommentFormContext} from "../../../context/CommentFormContext";
-
+import {createCommentForPost} from "../../../redux/post-comments/post-comments.actions";
+// import {createCommentForPost} from '../../../api/fetchHooks'
+import {ErrorResponse, IComment} from "../../../utils/types";
+import {resetCreateComments} from "../../../redux/post-comments/post-comments.slice";
 const CommentFormEditor = dynamic(() => import('./CommentFormEditor').then(e => e.default),{ssr: false})
 
 
@@ -20,10 +22,11 @@ interface CommentFormProps {
     idRoot: null | number
     isClosable?: boolean
     onClose?:() => void,
+    setCommentAnswers: (comment: IComment) => void
 }
 
 
-const CommentForm: React.FC<CommentFormProps> = ({idPost, isReply, idRoot,isClosable, onClose,}) => {
+const CommentForm: React.FC<CommentFormProps> = ({idPost, isReply, idRoot,isClosable, onClose, setCommentAnswers}) => {
     const dispatch = useAppDispatch()
     const [isFocus, setOnFocus] = React.useState(false)
     const [textComment, setTextComment] = React.useState<OutputData['blocks']>([])
@@ -32,9 +35,9 @@ const CommentForm: React.FC<CommentFormProps> = ({idPost, isReply, idRoot,isClos
         loadingCreateComment: {
             idRootComment: idRootCommentLoading,
             isLoading: isLoadingCreateComment
-        },
-        isCreated
+        }, isCreated
     } = useTypedSelector((state) => state.post_data.post_comments.create)
+    // const [isCreated, setIsCreated] = React.useState<boolean>(false);
     const {handlerClose} = useCommentFormContext()
 
     const onFocus = () => {
@@ -44,27 +47,41 @@ const CommentForm: React.FC<CommentFormProps> = ({idPost, isReply, idRoot,isClos
         }
     }
 
-    const onSubmit = () => {
+    const onSubmit = async () => {
         if (textComment.length > 0) {
-            dispatch(createCommentForPost({id_post: idPost,
-                id_root: idRoot,
-                is_reply: isReply,
-                text: textComment
-            }))
+                dispatch(createCommentForPost({
+                    id_post: idPost,
+                    id_root: idRoot,
+                    is_reply: isReply,
+                    text: textComment
+                }))
+            // const response = await createCommentForPost({
+            //     id_post: idPost,
+            //     id_root: idRoot,
+            //     is_reply: isReply,
+            //     text: textComment
+            // })
+            // setIsCreated(true)
+            // setCommentAnswers(response.data)
         }
     }
     React.useEffect(() => {
         if (isCreated) {
-            if (!isClosable) {
+            if (isClosable) {
                 handlerClose()
             }
+            dispatch(resetCreateComments())
             setTextComment([])
         }
     }, [isCreated])
 
     return (
-        <form className={clsx(styles.commentForm, isFocus && styles.focus)} onFocus={onFocus} onBlur={() => setOnFocus(false)}>
-           <CommentFormEditor initialData={textComment} setTextComment={setTextComment} isClear={isCreated}/>
+        <form className={clsx(styles.commentForm, isFocus && styles.focus)}
+              onFocus={onFocus}
+              onBlur={() => setOnFocus(false)}>
+           <CommentFormEditor initialData={textComment}
+                              setTextComment={setTextComment}
+                              isClear={isCreated}/>
             <div className={styles.commentForm__actions}>
                 {isAuth &&
                     <UserAvatar userAvatar={data.username}

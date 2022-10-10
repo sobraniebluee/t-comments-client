@@ -2,7 +2,7 @@ import React from 'react';
 import clsx from "clsx";
 import styles from "../PostComments.module.scss";
 import {useBranchContext} from "../../../context/BranchContext";
-import {useCommentContext} from "../../../context/CommentContext";
+import {useHideBranchContext} from "../../../context/HideBranchCommentContext";
 import {IComment} from "../../../utils/types";
 import {hasOwnIds} from "../../../utils/utils";
 
@@ -18,7 +18,7 @@ interface BranchProps {
 const Branch: React.FC<BranchProps> = ({id, isDraw, currentIterLevel, currentCompLevel, rootBranchId, idsChild}) => {
 
     const {idActiveBranch, handlerIdActiveBranch} = useBranchContext()
-    const {idsHideBranch, handlerHideBranch} = useCommentContext()
+    const {idsHideBranch, handlerHideBranch} = useHideBranchContext()
     const isHide = idsHideBranch.filter(item => item.idsChild.includes(id))
     const handlerMouseEnter = () => {
         handlerIdActiveBranch(rootBranchId)

@@ -1,9 +1,16 @@
 import React from 'react';
 import {IComment} from "../../utils/types";
 import {countCommentsDepth, hasOwnIds} from "../../utils/utils";
-import Comment, {CommentProps, CommentsLevels} from "./Comment";
+import Comment, {CommentsLevels} from "./Comment";
 
-const CommentChildren: React.FC<CommentProps> = ({id: rootId, author, text, created_at, updated_at, level, rootAnswers, dataBranchesLevels }) => {
+interface CommentChildrenProps {
+    id: number,
+    level: number,
+    rootAnswers: IComment[],
+    dataBranchesLevels: CommentsLevels[]
+}
+
+const CommentChildren: React.FC<CommentChildrenProps> = React.memo(({id: rootId, level, rootAnswers, dataBranchesLevels }) => {
     return (
         <>
             {
@@ -25,22 +32,24 @@ const CommentChildren: React.FC<CommentProps> = ({id: rootId, author, text, crea
                     }
                     dataBranchesLevels.push(newBranchData)
                     return (
-                        <Comment key={(itemId * Math.random()).toString(36)}
-                                 id={itemId}
-                                 author={author}
-                                 created_at={created_at}
-                                 text={text}
-                                 level={level + 1}
-                                 rootAnswers={answers}
-                                 dataBranchesLevels={dataBranchesLevels}
-                                 isLast={!(answers.length > 0)}
-                        />
+                            <Comment key={itemId}
+                                     id={itemId}
+                                     author={author}
+                                     created_at={created_at}
+                                     text={text}
+                                     level={level + 1}
+                                     rootAnswers={answers}
+                                     dataBranchesLevels={dataBranchesLevels}
+                                     isLast={!(answers.length > 0)}
+                            />
                     )
                 }))
             }
         </>
 
     )
-};
+});
+
+CommentChildren.displayName = "CommentChildren"
 
 export default CommentChildren;

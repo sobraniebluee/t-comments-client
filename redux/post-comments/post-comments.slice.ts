@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {IComment, IPagination} from "../../utils/types";
 import {createCommentForPost, fetchCommentsForPost} from "./post-comments.actions";
+import {findRootComment} from "../../utils/utils";
 
 interface LoadingCreateComment {
     idRootComment: number | null,
@@ -10,7 +11,7 @@ interface LoadingCreateComment {
 interface CreateComment {
     loadingCreateComment: LoadingCreateComment
     message: string | null
-    isCreated:boolean
+    isCreated:boolean,
 }
 
 interface PostCommentsState {
@@ -45,9 +46,9 @@ const postCommentsSlice = createSlice({
         setIdLoadingCreate: (state, action: PayloadAction<number | null>) => {
             state.create.loadingCreateComment.idRootComment = action.payload
         },
-        resetPostComments: () => {
-
-        }
+        resetCreateComments: (state) => {
+            state.create.isCreated = false
+        },
     },
     extraReducers: {
         [fetchCommentsForPost.pending.type]: (state) => {
@@ -66,19 +67,20 @@ const postCommentsSlice = createSlice({
             state.create.loadingCreateComment.isLoading = true
             state.create.isCreated = false
         },
-        [createCommentForPost.fulfilled.type]: (state, action: PayloadAction<IComment>) => {
+        [createCommentForPost.fulfilled.type]: (state, action: PayloadAction<IComment[]>) => {
             state.create.loadingCreateComment.isLoading = false
             state.create.isCreated = true
-            // state.comments = [...state.comments,]
-            console.log(action.payload)
+            state.comments = [...action.payload]
         },
         [createCommentForPost.rejected.type]: (state, action: PayloadAction<string>) => {
             state.create.loadingCreateComment.isLoading = false
             state.message = action.payload
             state.create.isCreated = false
+            console.log(action.payload)
+
         }
     }
 })
 
-export const {setComments, setIdLoadingCreate} = postCommentsSlice.actions
+export const {setComments, setIdLoadingCreate, resetCreateComments} = postCommentsSlice.actions
 export const postCommentsReducer =  postCommentsSlice.reducer

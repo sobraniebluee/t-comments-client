@@ -10,11 +10,6 @@ interface CommentFormEditorProps {
     isClear: boolean
 }
 
-// export interface IComm {
-//     type: 'text' | 'url',
-//     data: string
-// }
-
 
 const CommentFormEditor: React.FC<CommentFormEditorProps> = ({initialData, setTextComment, isClear}) => {
     const commentEditorRef = React.useRef<HTMLDivElement>(null)

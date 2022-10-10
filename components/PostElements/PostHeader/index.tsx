@@ -2,7 +2,6 @@ import React from 'react';
 import styles from "../../PostPreview/PostPreview.module.scss";
 import Link from "next/link";
 import {Typography} from "@mui/material";
-import {timeHasPassed} from "../../../utils/timeHasPassed";
 import {useAppDispatch, useTypedSelector} from "../../../redux/hooks";
 import MenuHeader from "./MenuHeader";
 import {useRouter} from "next/router";

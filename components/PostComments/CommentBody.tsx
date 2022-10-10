@@ -8,7 +8,7 @@ import {timeHasPassed} from "../../utils/timeHasPassed";
 import Vote, {VoteTypeEnum} from "../Vote";
 import {OutputBlockData, OutputData} from "@editorjs/editorjs";
 import BranchCommentForm from "./BranchCommentForm";
-import {IAuthor} from "../../utils/types";
+import {IAuthor, IComment} from "../../utils/types";
 import WrapperCommentBody from './WrapperCommentBody';
 
 interface CommentBodyProps {
@@ -16,13 +16,14 @@ interface CommentBodyProps {
     idPost?: number
     author: IAuthor
     text: OutputData['blocks'],
+    setCommentAnswers: (comment: IComment) => void
     created_at: string
     isLastComment?: boolean
     updated_at?: string
     countAnswers: number
 }
 
-const CommentBody: React.FC<CommentBodyProps> = React.memo((({id, author,text, updated_at,created_at, isLastComment, countAnswers}) => {
+const CommentBody: React.FC<CommentBodyProps> = ({id, author,text, updated_at,created_at, isLastComment, countAnswers, setCommentAnswers}) => {
     return (
         <WrapperCommentBody id={id} countAnswers={countAnswers}>
             <div className={styles.commentHeader}>
@@ -31,7 +32,7 @@ const CommentBody: React.FC<CommentBodyProps> = React.memo((({id, author,text, u
                         <UserAvatar userAvatar={author.username}
                                     width={30}
                                     height={30}
-                                    background={getRandomColor()}
+                                    background={"#552993"}
                         />
                     </NoSsr>
                     <div className={styles.userTitle}>
@@ -58,10 +59,11 @@ const CommentBody: React.FC<CommentBodyProps> = React.memo((({id, author,text, u
             </div>
             <BranchCommentForm idComment={id}
                                isLast={isLastComment}
+                               setCommentAnswers={setCommentAnswers}
             />
         </WrapperCommentBody>
     );
-}))
+}
 
 CommentBody.displayName = 'CommentBodyComp'
 

@@ -19,9 +19,9 @@ export const createPost = createAsyncThunk(
     async (data: PostCreateRequest, thunkApi) => {
         try {
             const response = await Api().post.create(data)
-            // console.log(response.data)
             return response.data
         } catch (err: any) {
+            console.log(err)
             const error: ErrorResponse = err
             if (!error.response) {
                 throw err
@@ -42,7 +42,7 @@ export const updatePost = createAsyncThunk(
             if (!error.response) {
                 throw err
             }
-            return  thunkApi.rejectWithValue(error.response.data.message)
+            return thunkApi.rejectWithValue(error.response.data.message)
         }
     }
 )

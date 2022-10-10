@@ -19,7 +19,6 @@ const BranchContextProvider: React.FC<BranchContextProviderProps> = ({children})
     const handlerIdActiveBranch = (id: number) => {
         setIdActiveBranch(id)
     }
-
     return (
         <BranchContext.Provider value={{idActiveBranch, handlerIdActiveBranch}}>
             {children}
